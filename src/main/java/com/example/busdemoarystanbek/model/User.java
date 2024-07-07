@@ -40,6 +40,9 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private boolean enabled;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Reservation reservation;
+
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
