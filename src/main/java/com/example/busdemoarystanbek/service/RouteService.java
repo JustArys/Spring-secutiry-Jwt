@@ -14,45 +14,32 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class RouteService {
-    private BusRepository busRepository;
-    private RouteRepository routeRepository;
+    private final BusRepository busRepository;
+    private final RouteRepository routeRepository;
 
     public Route addRoute(Route route){
-        Route r = routeRepository.findByRouteFromAndRouteTo(route.getRouteFrom(), route.getRouteTo());
-        if(r == null){
-            List<Bus> busList = route.getBus();
-            for (Bus bus : busList) {
-                bus.setRouteFrom(route.getRouteFrom());
-                bus.setRouteTo(route.getRouteTo());
-                bus.setRoute(route);
-                busRepository.save(bus);
-            }
-            return routeRepository.save(route);
-        }
-        else {
-            throw new RuntimeException("route already exists");
-        }
+        return routeRepository.save(route);
     }
-    public Route updateRoute(Route route){
-        Optional<Route> opt = routeRepository.findById(route.getId());
-        if(opt.isPresent()){
-            List<Bus> busList = opt.get().getBus();
-
-            for(Bus b: busList) {
-                b.setRouteFrom(route.getRouteFrom());
-                b.setRouteTo(route.getRouteTo());
-            }
-            return routeRepository.save(route);
-        }
-        else {
-            throw new RuntimeException("No such route present to update");
-        }
+    public Route updateRoute(Route route,Route updateRoute){
+        updateRoute.setRouteTo(route.getRouteTo());
+        updateRoute.setRouteFrom(route.getRouteFrom());
+        updateRoute.setDistance(route.getDistance());
+        updateRoute.setDepartureTime(route.getDepartureTime());
+        updateRoute.setArrivalTime(route.getArrivalTime());
+        return routeRepository.save(updateRoute);
     }
 
     public Route deleteRoute(Long id) {
-        Route route = findRouteById(id);
-        routeRepository.delete(route);
-        return route;
+        Route route = routeRepository.findById(id).get();
+         routeRepository.deleteById(id);
+         return route;
+    }
+
+    public void assignBusToRoute(Long routeId, Long busId){
+        Route route = routeRepository.findById(routeId).orElseThrow();
+        Bus bus = busRepository.findById(busId).orElseThrow();
+        route.setBus(bus);
+        routeRepository.save(route);
     }
 
     public Route viewRoute(Long id){
@@ -60,13 +47,7 @@ public class RouteService {
     }
 
     public List<Route> viewAllRoute(){
-        List<Route> list = routeRepository.findAll();
-        if(!list.isEmpty()){
-            return list;
-        }
-        else {
-            throw new RuntimeException("No routes present");
-        }
+        return routeRepository.findAll();
     }
 
     public Route findRouteById(Long id){

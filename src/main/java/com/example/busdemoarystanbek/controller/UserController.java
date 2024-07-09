@@ -34,4 +34,9 @@ public class UserController {
     private ResponseEntity<?> confirmEmail(@RequestParam("token") String token) {
         return userService.confirmEmail(token);
     }
+
+    @GetMapping("/tickets")
+    public ResponseEntity<?> getTickets() {
+        return ResponseEntity.ok(userService.viewAllTickets(userService.getAuthenticatedUser()));
+    }
 }

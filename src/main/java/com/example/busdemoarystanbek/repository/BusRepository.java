@@ -10,5 +10,4 @@ public interface BusRepository extends JpaRepository<Bus, Long> {
 
     public List<Bus> findByBusType(String busType);
 
-    public List<Bus> findByRouteFromAndRouteTo(String routeFrom,String routeTo);
 }

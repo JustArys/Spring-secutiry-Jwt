@@ -14,16 +14,16 @@ import java.util.List;
 @RequestMapping("/api/v1/bus")
 @RequiredArgsConstructor
 public class BusController {
-    private BusService busService;
+    private final BusService busService;
 
     @PostMapping("/addBus")
     public ResponseEntity<Bus> createBus(@RequestBody BusRequest bus){
         return new ResponseEntity<>(busService.addBus(bus), HttpStatus.CREATED);
     }
 
-    @PutMapping("/updateBus")
-    public ResponseEntity<Bus> updateBus(@RequestBody Bus bus){
-        return new ResponseEntity<>(busService.updateBus(bus), HttpStatus.ACCEPTED);
+    @PutMapping("/{id}")
+    public ResponseEntity<Bus> updateBus(@PathVariable("id") Long id, @RequestBody BusRequest bus){
+        return new ResponseEntity<>(busService.updateBus(bus, busService.viewBus(id)), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/deleteBus/{id}")
@@ -41,7 +41,7 @@ public class BusController {
     }
 
     @GetMapping("busByType/{busType}")
-    public ResponseEntity<List<Bus>> viewItbyType(@PathVariable("busType") String type){
+    public ResponseEntity<List<Bus>> viewItByType(@PathVariable("busType") String type){
         return new ResponseEntity<>(busService.viewBusByType(type), HttpStatus.FOUND);
     }
 

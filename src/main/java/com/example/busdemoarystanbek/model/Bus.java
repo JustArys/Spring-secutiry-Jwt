@@ -7,10 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Data
 @Builder
@@ -35,29 +33,12 @@ public class Bus {
     @Column(name = "bus_type", nullable = false)
     private String busType;
 
-    @Column(name = "route_from", nullable = false)
-    private String routeFrom;
-    @Column(name = "route_to", nullable = false)
-    private String routeTo;
-
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "arrival_time", nullable = false)
-    private LocalDateTime arrivalTime;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "departure_time")
-    private LocalDateTime departureTime;
-
+    @JsonIgnore
     @Column(name = "availabel_seats", nullable = false)
     private Integer availableSeats;
+
     @Column(name = "seats", nullable = false)
     private Integer seats;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "route_FK")
-    @JsonIgnore
-    private Route route;
 
     @Column(name = "plate_number", nullable = false)
     private String plate;

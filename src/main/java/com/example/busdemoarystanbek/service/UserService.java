@@ -1,9 +1,11 @@
 package com.example.busdemoarystanbek.service;
 
 
+import com.example.busdemoarystanbek.model.Ticket;
 import com.example.busdemoarystanbek.model.User;
 import com.example.busdemoarystanbek.model.UserInfo;
 import com.example.busdemoarystanbek.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.NonUniqueObjectException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,20 +13,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final TicketRepository ticketRepository;
 
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final ConfirmationTokenService confirmationTokenService;
 
-    public UserService(UserRepository userRepository, ConfirmationTokenRepository confirmationTokenRepository, ConfirmationTokenService confirmationTokenService) {
-        this.userRepository = userRepository;
-        this.confirmationTokenRepository = confirmationTokenRepository;
-        this.confirmationTokenService = confirmationTokenService;
-    }
 
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findUserByEmail(username)
@@ -67,5 +67,8 @@ public class UserService {
     public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email).orElseThrow(()
                 -> new NoSuchElementException(String.format("User with email '%d' not found", email)));
+    }
+    public List<Ticket> viewAllTickets(User user){
+        return ticketRepository.findByUser(user);
     }
 }
