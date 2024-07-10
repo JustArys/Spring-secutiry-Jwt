@@ -14,6 +14,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -51,5 +52,8 @@ public class Route {
     @ManyToOne
     private Bus bus;
 
+    @JsonIgnore
+    @ManyToMany
+    private Set<Driver> drivers;
 
 }

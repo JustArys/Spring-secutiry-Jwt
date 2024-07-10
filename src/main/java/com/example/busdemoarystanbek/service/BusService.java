@@ -5,18 +5,16 @@ import com.example.busdemoarystanbek.model.User;
 import com.example.busdemoarystanbek.model.request.BusRequest;
 import com.example.busdemoarystanbek.repository.BusRepository;
 import com.example.busdemoarystanbek.repository.RouteRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class BusService {
     private final BusRepository busRepository;
-
-    public BusService(BusRepository busRepository){
-        this.busRepository = busRepository;
-    }
 
     public Bus addBus(BusRequest request){
         var bus = Bus.builder().busName(request.getBusName())
@@ -52,7 +50,7 @@ public class BusService {
             return opt.get();
         }
         else {
-            throw new RuntimeException(STR."No Bus present with given id :\{id}");
+            throw new RuntimeException("No Bus present with given id :" + id);
         }
     }
 
@@ -61,7 +59,7 @@ public class BusService {
         if(b.size()>0){
             return b;
         } else {
-            throw new RuntimeException(STR."No Bus present with given type :\{busType}");
+            throw new RuntimeException("No Bus present with given type :" + busType);
         }
     }
     public List<Bus> viewAllBus() {

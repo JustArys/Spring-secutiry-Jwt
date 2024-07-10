@@ -2,14 +2,17 @@ package com.example.busdemoarystanbek.controller;
 
 import com.example.busdemoarystanbek.model.Route;
 import com.example.busdemoarystanbek.model.Ticket;
+import com.example.busdemoarystanbek.service.DriverService;
 import com.example.busdemoarystanbek.service.RouteService;
 import com.example.busdemoarystanbek.service.TicketService;
 import com.example.busdemoarystanbek.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -19,6 +22,7 @@ public class RouteController {
     private final RouteService rService;
     private final TicketService ticketService;
     private final UserService userService;
+    private final DriverService driverService;
 
     @PostMapping("/addRoute")
     public ResponseEntity<Route> createRoute( @RequestBody Route route) {
@@ -63,8 +67,15 @@ public class RouteController {
     }
     @PutMapping("/{routeId}/assign-bus/{busId}")
     public void assignBusToRoute(@PathVariable Long routeId, @PathVariable Long busId){
-        if(userService.isAdmin(userService.getAuthenticatedUser())) {
+        if (userService.isAdmin(userService.getAuthenticatedUser())) {
             rService.assignBusToRoute(routeId, busId);
+        }
+    }
+
+    @PutMapping("/{routeId}/assign-driver/{driverId}")
+    public void assignDriverToRoute(@PathVariable Long routeId, @PathVariable Long driverId) {
+        if (userService.isAdmin(userService.getAuthenticatedUser())) {
+            driverService.assignDriverToRoute(routeId, driverId);
         }
     }
 
@@ -72,5 +83,15 @@ public class RouteController {
     public ResponseEntity<Ticket> reserveTicket(@PathVariable Long routeId){
         Ticket ticket = ticketService.reserveTicket(userService.getAuthenticatedUser(), routeId);
         return ResponseEntity.ok(ticket);
+    }
+
+    @GetMapping("/searchRoutes")
+    public List<Route> searchRoutes(
+            @RequestParam(required = false) String routeFrom,
+            @RequestParam(required = false) String routeTo,
+            @RequestParam(required = false) LocalDateTime departureTime,
+            @RequestParam(required = false) LocalDateTime arrivalTime
+    ) {
+        return rService.searchRoutes(routeFrom, routeTo, departureTime, arrivalTime);
     }
 }
