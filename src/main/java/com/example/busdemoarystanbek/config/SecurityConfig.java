@@ -29,11 +29,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable).cors(withDefaults())
-                .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**", "/error", "/api/v1/user/confirmemail")
-                        .anonymous().anyRequest().authenticated())
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/api/v1/auth/**", "/error", "/api/v1/user/confirmemail").anonymous()
+                        .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
-                .authenticationProvider(authenticationProvider()).addFilterBefore(
-                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
