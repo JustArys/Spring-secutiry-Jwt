@@ -1,16 +1,13 @@
 package com.example.busdemoarystanbek.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonManagedReference;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -36,4 +33,11 @@ public class Ticket {
     @Column(name = "booking_time")
     private LocalDateTime bookingTime;
 
+    public LocalDateTime ticketBetweenDate(LocalDateTime start, LocalDateTime end) {
+        if (bookingTime != null && bookingTime.isAfter(start) && bookingTime.isBefore(end)) {
+            return bookingTime;
+        } else {
+            return null;
+        }
+    }
 }

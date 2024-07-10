@@ -1,10 +1,8 @@
 package com.example.busdemoarystanbek.service;
 
 import com.example.busdemoarystanbek.model.Bus;
-import com.example.busdemoarystanbek.model.User;
 import com.example.busdemoarystanbek.model.request.BusRequest;
 import com.example.busdemoarystanbek.repository.BusRepository;
-import com.example.busdemoarystanbek.repository.RouteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

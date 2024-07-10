@@ -1,6 +1,5 @@
 package com.example.busdemoarystanbek.model.request;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,10 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BusRequest {
-    private String busName;
-    private String driverName;
-    private String busType;
-    private Integer seats;
-    private String plate;
+public class StatisticsRequest {
+    private int ticketSoldAmount;
+    private int ticketSoldTotal;
 }

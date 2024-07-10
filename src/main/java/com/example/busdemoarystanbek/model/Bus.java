@@ -1,6 +1,5 @@
 package com.example.busdemoarystanbek.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,14 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name ="Bus")
+@Table(name = "Bus")
 public class Bus {
 
     @JsonIgnore
@@ -42,9 +39,4 @@ public class Bus {
 
     @Column(name = "plate_number", nullable = false)
     private String plate;
-
-
-
-
-
 }

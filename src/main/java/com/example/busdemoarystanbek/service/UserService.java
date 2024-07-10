@@ -1,6 +1,5 @@
 package com.example.busdemoarystanbek.service;
 
-
 import com.example.busdemoarystanbek.model.Ticket;
 import com.example.busdemoarystanbek.model.User;
 import com.example.busdemoarystanbek.model.UserInfo;

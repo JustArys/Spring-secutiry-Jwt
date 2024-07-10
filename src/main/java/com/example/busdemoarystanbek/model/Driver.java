@@ -7,9 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-import java.util.List;
-import java.util.Set;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -17,7 +14,6 @@ import java.util.Set;
 @Entity
 @Table(name = "Driver")
 public class Driver {
-
     @JsonIgnore
     @Id
     @Column(name = "driver_id")
@@ -32,5 +28,4 @@ public class Driver {
 
     @Column(name = "license_number", nullable = false)
     private String licenseNumber;
-
 }
