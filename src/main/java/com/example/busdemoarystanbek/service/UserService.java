@@ -71,4 +71,9 @@ public class UserService {
     public List<Ticket> viewAllTickets(User user){
         return ticketRepository.findByUser(user);
     }
+
+    public boolean isAdmin(User user){
+        if(user.isAdmin()) return true;
+        else throw new RuntimeException("Not enough rights");
+    }
 }

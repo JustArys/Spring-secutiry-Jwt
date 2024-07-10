@@ -14,7 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.classfile.attribute.EnclosingMethodAttribute;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +33,7 @@ public class AuthenticationService{
         var user = User.builder()
                 .userInfo(UserInfo.builder().firstName(request.getFirstName()).lastName(request.getLastName()).build())
                 .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
+                .isAdmin(adminAuthorities(request.getEmail()))
                 .build();
         userService.saveUser(user);
         return JwtAuthenticationResponse.builder()
@@ -58,5 +61,8 @@ public class AuthenticationService{
                 .accessToken(jwtService.generateAccessToken(user))
                 .refreshToken(jwtService.generateRefreshToken(user).getRefreshToken())
                 .build();
+    }
+    public boolean adminAuthorities(String email){
+        return Objects.equals(email, "abiev.arystanbek@gmail.com");
     }
 }

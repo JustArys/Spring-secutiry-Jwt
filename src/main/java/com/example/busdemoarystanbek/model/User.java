@@ -42,7 +42,8 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private boolean enabled;
 
-
+    @Column(name = "isAdmin")
+    private boolean isAdmin;
 
     @JsonIgnore
     @Override

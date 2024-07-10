@@ -22,19 +22,32 @@ public class RouteController {
 
     @PostMapping("/addRoute")
     public ResponseEntity<Route> createRoute( @RequestBody Route route) {
-        return new ResponseEntity<>(rService.addRoute(route), HttpStatus.CREATED);
+        if(userService.isAdmin(userService.getAuthenticatedUser())){
+        return new ResponseEntity<>(rService.addRoute(route), HttpStatus.CREATED);}
+        else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
 
     }
 
     @PutMapping("/updateRoute/{routeId}")
     public ResponseEntity<Route> updateIt(@PathVariable("routeId") Long Id, @RequestBody Route route){
-        return new ResponseEntity<>(rService.updateRoute(route, rService.findRouteById(Id)),HttpStatus.ACCEPTED);
+        if(userService.isAdmin(userService.getAuthenticatedUser())){
+        return new ResponseEntity<>(rService.updateRoute(route, rService.findRouteById(Id)),HttpStatus.ACCEPTED);}
+        else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
 
     }
 
     @DeleteMapping("deleteRoute/{routeId}")
     public ResponseEntity<Route> deleteIt(@PathVariable("routeId") Long Id, @RequestParam(required = false) String key){
-        return new ResponseEntity<>(rService.deleteRoute(Id), HttpStatus.OK);
+        if(userService.isAdmin(userService.getAuthenticatedUser())){
+            return new ResponseEntity<>(rService.deleteRoute(Id), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 
     @GetMapping("/{routeId}")
@@ -50,7 +63,9 @@ public class RouteController {
     }
     @PutMapping("/{routeId}/assign-bus/{busId}")
     public void assignBusToRoute(@PathVariable Long routeId, @PathVariable Long busId){
-        rService.assignBusToRoute(routeId, busId);
+        if(userService.isAdmin(userService.getAuthenticatedUser())) {
+            rService.assignBusToRoute(routeId, busId);
+        }
     }
 
     @PostMapping("/{routeId}/reserve")

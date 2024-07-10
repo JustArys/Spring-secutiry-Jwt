@@ -1,6 +1,7 @@
 package com.example.busdemoarystanbek.service;
 
 import com.example.busdemoarystanbek.model.Bus;
+import com.example.busdemoarystanbek.model.User;
 import com.example.busdemoarystanbek.model.request.BusRequest;
 import com.example.busdemoarystanbek.repository.BusRepository;
 import com.example.busdemoarystanbek.repository.RouteRepository;
@@ -19,12 +20,12 @@ public class BusService {
 
     public Bus addBus(BusRequest request){
         var bus = Bus.builder().busName(request.getBusName())
-                .busType(request.getBusType())
-                .seats(request.getSeats())
-                .availableSeats(request.getSeats())
-                .plate(request.getPlate())
-                .driverName(request.getDriverName())
-                .build();
+                    .busType(request.getBusType())
+                    .seats(request.getSeats())
+                    .availableSeats(request.getSeats())
+                    .plate(request.getPlate())
+                    .driverName(request.getDriverName())
+                    .build();
         busRepository.save(bus);
         return bus;
     }
