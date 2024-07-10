@@ -45,6 +45,25 @@ public class TicketService {
         return ticket;
     }
 
+    public Ticket deleteTicket(User user, Long id){
+        Ticket ticketUser = ticketRepository.findById(id).orElseThrow();
+        if(ticketUser.getUser() == user){
+            ticketRepository.delete(ticketUser);
+            return ticketUser;
+        }
+        else {
+            throw new RuntimeException("No tickets with this id");
+        }
+    }
+
+    public Ticket getTicket(User user, Long id){
+        Ticket ticket = ticketRepository.findById(id).orElseThrow();
+        if(ticket.getUser() == user){
+            return ticket;
+        }
+        else throw new RuntimeException("You don't own this ticket");
+    }
+
     private static SimpleMailMessage getSimpleMailMessage(User user, Route route) {
         String subject = "Ticket Reservation Confirmation";
         String messageText = String.format("Dear %s, your ticket for the trip from %s to %s has been successfully reserved. Departure: %s, Arrival: %s",

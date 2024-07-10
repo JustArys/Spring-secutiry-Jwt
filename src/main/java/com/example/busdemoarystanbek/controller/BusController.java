@@ -59,5 +59,4 @@ public class BusController {
         return new ResponseEntity<>(busService.viewBusByType(type), HttpStatus.FOUND);
     }
 
-
 }
