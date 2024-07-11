@@ -45,6 +45,16 @@ public class DriverService {
         Route route = routeRepository.findById(routeId).orElseThrow(() -> new RuntimeException("Route not found"));
         Driver driver = driverRepository.findById(driverId).orElseThrow(() -> new RuntimeException("Driver not found"));
 
+        // Check if the driver is already assigned to another route at the same time
+        List<Route> conflictingDepartureRoutes = routeRepository.findByDriverAndDepartureTimeBetween(
+                driver, route.getDepartureTime(), route.getArrivalTime());
+        List<Route> conflictingArrivalRoutes = routeRepository.findByDriverAndArrivalTimeBetween(
+                driver, route.getDepartureTime(), route.getArrivalTime());
+
+        if (!conflictingDepartureRoutes.isEmpty() || !conflictingArrivalRoutes.isEmpty()) {
+            throw new IllegalStateException("The driver is already assigned to another route during this time");
+        }
+
         // Check if the current location matches
         if (!driver.getCurrentLocation().equals(route.getRouteFrom())) {
             throw new RuntimeException("Driver is not available at the route's departure location");
@@ -62,7 +72,7 @@ public class DriverService {
         }
 
         // Assigning a driver to a route
-        route.getDrivers().add(driver);
+        route.setDriver(driver);
         routeRepository.save(route);
 
         // Update the driver's current location

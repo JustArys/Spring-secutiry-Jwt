@@ -38,8 +38,21 @@ public class RouteService {
     }
 
     public void assignBusToRoute(Long routeId, Long busId){
-        Route route = routeRepository.findById(routeId).orElseThrow();
-        Bus bus = busRepository.findById(busId).orElseThrow();
+        Route route = routeRepository.findById(routeId)
+                .orElseThrow(() -> new RuntimeException("Route not found"));
+        Bus bus = busRepository.findById(busId)
+                .orElseThrow(() -> new RuntimeException("Bus not found"));
+
+        // Check if the bus is already assigned to another route at the same time
+        List<Route> conflictingDepartureRoutes = routeRepository.findByBusAndDepartureTimeBetween(
+                bus, route.getDepartureTime(), route.getArrivalTime());
+        List<Route> conflictingArrivalRoutes = routeRepository.findByBusAndArrivalTimeBetween(
+                bus, route.getDepartureTime(), route.getArrivalTime());
+
+        if (!conflictingDepartureRoutes.isEmpty() || !conflictingArrivalRoutes.isEmpty()) {
+            throw new IllegalStateException("The bus is already assigned to another route during this time");
+        }
+
         route.setBus(bus);
         routeRepository.save(route);
     }

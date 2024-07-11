@@ -2,19 +2,13 @@ package com.example.busdemoarystanbek.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
-import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -53,7 +47,7 @@ public class Route {
     private Bus bus;
 
     @JsonIgnore
-    @ManyToMany
-    private Set<Driver> drivers;
+    @ManyToOne
+    private Driver driver;
 
 }

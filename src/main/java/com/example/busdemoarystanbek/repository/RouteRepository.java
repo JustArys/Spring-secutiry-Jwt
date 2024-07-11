@@ -1,5 +1,7 @@
 package com.example.busdemoarystanbek.repository;
 
+import com.example.busdemoarystanbek.model.Bus;
+import com.example.busdemoarystanbek.model.Driver;
 import com.example.busdemoarystanbek.model.Route;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -22,4 +24,10 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
     List<Route> findByDepartureTimeAndArrivalTime(LocalDateTime departureTime, LocalDateTime arrivalTime);
     List<Route> findByDepartureTime(LocalDateTime departureTime);
     List<Route> findByArrivalTime(LocalDateTime arrivalTime);
+
+    List<Route> findByBusAndDepartureTimeBetween(Bus bus, LocalDateTime departureTime, LocalDateTime arrivalTime);
+    List<Route> findByBusAndArrivalTimeBetween(Bus bus, LocalDateTime departureTime, LocalDateTime arrivalTime);
+
+    List<Route> findByDriverAndDepartureTimeBetween(Driver driver, LocalDateTime departureTime, LocalDateTime arrivalTime);
+    List<Route> findByDriverAndArrivalTimeBetween(Driver driver, LocalDateTime departureTime, LocalDateTime arrivalTime);
 }
