@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnalyticsRequest {
-    private int tripsAmount;
-    private int ticketsSold;
-    private long busId;
+public class ReportRequest {
+    private String reportDescription;
+    private Long statisticsId;
+    private Long analyticsId;
 }

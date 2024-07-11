@@ -24,9 +24,15 @@ public class Statistics {
 
     @JsonIgnore
     @Column(name = "statistics_percentage", nullable = false)
-    private double ticketPercentage = calculateTicketSoldPercentage();
+    private double ticketPercentage;
 
-    private double calculateTicketSoldPercentage() {
-        return (double) this.ticketSoldAmount / this.ticketSoldTotal;
+    @PrePersist
+    @PreUpdate
+    private void calculateTicketSoldPercentage() {
+        if (ticketSoldTotal != 0) {
+            this.ticketPercentage = (double) this.ticketSoldAmount / this.ticketSoldTotal;
+        } else {
+            this.ticketPercentage = 0.0;
+        }
     }
 }

@@ -27,11 +27,16 @@ public class Analytics {
 
     @JsonIgnore
     @Column(name = "analytics_tickets_sold_percentage", nullable = false)
-    private double ticketsSoldPercentage = calculateTicketsSoldPercentage();
+    private double ticketsSoldPercentage;
 
     @JsonIgnore
     @ManyToOne
     private Bus bus;
+
+    public void setBus(Bus bus) {
+        this.bus = bus;
+        this.ticketsSoldPercentage = calculateTicketsSoldPercentage();
+    }
 
     public double calculateTicketsSoldPercentage() {
         if (bus != null && bus.getSeats() > 0) {

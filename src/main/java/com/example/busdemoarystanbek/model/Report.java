@@ -11,6 +11,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Report {
     @JsonIgnore
     @Id
@@ -25,4 +26,7 @@ public class Report {
     @JsonIgnore
     @ManyToOne
     private Analytics analytics;
+
+    @Column(name = "report_description")
+    private String reportDescription;
 }

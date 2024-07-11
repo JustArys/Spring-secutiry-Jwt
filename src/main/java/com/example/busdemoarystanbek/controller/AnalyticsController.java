@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AnalyticsController {
     private final AnalyticsService analyticsService;
-    private final BusService busService;
 
     @PostMapping
     public ResponseEntity<Analytics> createAnalytics(@RequestBody AnalyticsRequest analyticsRequest) {

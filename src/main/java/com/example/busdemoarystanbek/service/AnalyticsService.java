@@ -17,7 +17,8 @@ public class AnalyticsService {
     private final BusRepository busRepository;
 
     public Analytics createAnalytics(AnalyticsRequest analyticsRequest) {
-        Bus bus = busRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("Bus not found"));
+        Bus bus = busRepository.findById(analyticsRequest.getBusId())
+                .orElseThrow(() -> new IllegalArgumentException("Bus not found"));
         Analytics analytics = Analytics.builder()
                 .tripsAmount(analyticsRequest.getTripsAmount())
                 .ticketsSold(analyticsRequest.getTicketsSold())
