@@ -13,4 +13,5 @@ public class ReportRequest {
     private String reportDescription;
     private Long statisticsId;
     private Long analyticsId;
+    //to commit into additional
 }
