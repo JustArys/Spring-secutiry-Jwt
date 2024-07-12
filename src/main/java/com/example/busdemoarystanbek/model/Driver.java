@@ -33,6 +33,7 @@ public class Driver {
     @Column(name = "license_number", nullable = false)
     private String licenseNumber;
 
+    @JsonIgnore
     @Column(name = "current_location", nullable = false)
     private String currentLocation;
 
