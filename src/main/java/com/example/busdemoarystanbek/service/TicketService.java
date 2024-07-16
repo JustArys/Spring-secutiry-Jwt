@@ -7,18 +7,14 @@ import com.example.busdemoarystanbek.model.User;
 import com.example.busdemoarystanbek.repository.BusRepository;
 import com.example.busdemoarystanbek.repository.RouteRepository;
 import com.example.busdemoarystanbek.repository.TicketRepository;
-import com.example.busdemoarystanbek.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class TicketService {
     private final TicketRepository ticketRepository;
